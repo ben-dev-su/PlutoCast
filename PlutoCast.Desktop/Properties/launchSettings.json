@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PlutoCast.Desktop (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "PlutoCast.Desktop (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
