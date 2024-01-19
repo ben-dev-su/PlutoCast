@@ -12,6 +12,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <LangVersion>Latest</LangVersion>
     <AccelerateBuildsInVisualStudio>True</AccelerateBuildsInVisualStudio>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
