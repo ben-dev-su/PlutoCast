@@ -11,7 +11,7 @@
   <Identity
     Name="1bb67274-f42c-4f2f-8c11-5b4cac5c8459"
     Publisher="CN=Pluto"
-    Version="1.0.0.0" />
+    Version="0.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="1bb67274-f42c-4f2f-8c11-5b4cac5c8459" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
