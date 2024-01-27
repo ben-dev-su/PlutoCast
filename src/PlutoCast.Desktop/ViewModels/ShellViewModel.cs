@@ -2,7 +2,8 @@
 
 namespace PlutoCast.Desktop.ViewModels;
 
-public partial class ShellViewModel : ObservableObject
+[ObservableObject]
+public partial class ShellViewModel : BaseViewModel
 {
     [ObservableProperty]
     private bool _canGoBack;

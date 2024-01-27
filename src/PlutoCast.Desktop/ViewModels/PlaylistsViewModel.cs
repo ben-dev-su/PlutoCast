@@ -1,3 +1,3 @@
 ﻿namespace PlutoCast.Desktop.ViewModels;
 
-public class PlaylistsViewModel { }
+public class PlaylistsViewModel : BaseViewModel { }

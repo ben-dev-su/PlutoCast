@@ -1,3 +1,3 @@
 ﻿namespace PlutoCast.Desktop.ViewModels;
 
-public class SubscriptionsViewModel { }
+public class SubscriptionsViewModel : BaseViewModel { }

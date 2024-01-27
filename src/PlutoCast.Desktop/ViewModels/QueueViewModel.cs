@@ -1,3 +1,3 @@
 ﻿namespace PlutoCast.Desktop.ViewModels;
 
-public class QueueViewModel { }
+public class QueueViewModel : BaseViewModel { }

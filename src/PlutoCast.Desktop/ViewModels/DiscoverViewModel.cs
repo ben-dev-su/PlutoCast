@@ -1,3 +1,3 @@
 ﻿namespace PlutoCast.Desktop.ViewModels;
 
-public class DiscoverViewModel { }
+public class DiscoverViewModel : BaseViewModel { }
