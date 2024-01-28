@@ -2,11 +2,15 @@
     x:Class="PlutoCast.Desktop.Views.Pages.ShellView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:PlutoCast.Desktop.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:PlutoCast.Desktop.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Loading="ShellView_OnLoading"
     mc:Ignorable="d">
+    <Page.Resources>
+        <converters:BackButtonVisibilityConverter x:Key="BackButtonVisibilityConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -33,10 +37,11 @@
             x:Name="NavigationView"
             Grid.Row="1"
             AlwaysShowHeader="False"
-            IsBackButtonVisible="Auto"
+            IsBackButtonVisible="{x:Bind ViewModel.CanGoBack, Mode=OneWay, Converter={StaticResource BackButtonVisibilityConverter}}"
             IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}"
             IsSettingsVisible="True"
-            PaneDisplayMode="Top">
+            PaneDisplayMode="Top"
+            SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=OneWay}">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Discover" Tag="DiscoverViewModel">
                     <NavigationViewItem.Icon>

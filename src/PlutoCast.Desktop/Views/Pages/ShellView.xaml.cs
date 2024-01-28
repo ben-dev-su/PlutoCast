@@ -1,7 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Animation;
 using PlutoCast.Desktop.ViewModels;
 using Windows.ApplicationModel;
 
@@ -13,7 +12,7 @@ public sealed partial class ShellView : Page
     {
         DataContext = App.GetService<ShellViewModel>();
         InitializeComponent();
-        ContentFrame.Navigate(typeof(DiscoverView), null, new ContinuumNavigationTransitionInfo());
+        ViewModel.NavigationService.Initialize(NavigationView, ContentFrame);
     }
 
     public ShellViewModel ViewModel => (ShellViewModel)DataContext;
