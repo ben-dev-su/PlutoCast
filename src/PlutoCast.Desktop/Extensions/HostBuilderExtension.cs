@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PlutoCast.Desktop.Interfaces;
+using PlutoCast.Desktop.Services;
 using PlutoCast.Desktop.ViewModels;
 using PlutoCast.Desktop.Views.Pages;
 
@@ -24,6 +26,9 @@ public static class HostBuilderExtension
         return hostBuilder.ConfigureServices(
             (context, services) =>
             {
+                // services
+                _ = services.AddSingleton<INavigationService, NavigationService>();
+
                 // Views and ViewModels
                 _ = services.AddTransient<DiscoverView>();
                 _ = services.AddTransient<DiscoverViewModel>();
