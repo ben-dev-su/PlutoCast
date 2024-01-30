@@ -28,6 +28,7 @@ public static class HostBuilderExtension
             {
                 // services
                 _ = services.AddSingleton<INavigationService, NavigationService>();
+                _ = services.AddSingleton<BogusService>();
 
                 // Views and ViewModels
                 _ = services.AddTransient<DiscoverView>();
