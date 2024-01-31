@@ -65,7 +65,18 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
-            <Frame x:Name="ContentFrame" />
+            <Grid
+                Margin="8"
+                BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Translation="0 0 8">
+                <Grid.Shadow>
+                    <ThemeShadow />
+                </Grid.Shadow>
+
+                <Frame x:Name="ContentFrame" />
+            </Grid>
         </NavigationView>
         <MediaPlayerElement
             Grid.Row="1"
