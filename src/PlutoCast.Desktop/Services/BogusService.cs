@@ -9,138 +9,422 @@ namespace PlutoCast.Desktop.Services;
 public class BogusService
 {
     private readonly List<TrendingPodcast> _trendingPodcasts = [];
-
+    private readonly List<TrendingPodcast> _newTrendingPodcasts = [];
+    private readonly List<TrendingPodcast> _trueCrimeTrendingPodcasts = [];
+    private readonly List<TrendingPodcast> _comedyTrendingPodcasts = [];
+    private readonly List<TrendingPodcast> _scienceTrendingPodcasts = [];
     private readonly List<Category> _categories =
         new()
         {
-            new Category(1, "Arts"),
-            new Category(2, "Books"),
-            new Category(3, "Design"),
-            new Category(4, "Fashion"),
-            new Category(5, "Beauty"),
-            new Category(6, "Food"),
-            new Category(7, "Performing"),
-            new Category(8, "Visual"),
-            new Category(9, "Business"),
-            new Category(10, "Careers"),
-            new Category(11, "Entrepreneurship"),
-            new Category(12, "Investing"),
-            new Category(13, "Management"),
-            new Category(14, "Marketing"),
-            new Category(15, "Non-Profit"),
-            new Category(16, "Comedy"),
-            new Category(17, "Interviews"),
-            new Category(18, "Improv"),
-            new Category(19, "Stand-Up"),
-            new Category(20, "Education"),
-            new Category(21, "Courses"),
-            new Category(22, "How-To"),
-            new Category(23, "Language"),
-            new Category(24, "Learning"),
-            new Category(25, "Self-Improvement"),
-            new Category(26, "Fiction"),
-            new Category(27, "Drama"),
-            new Category(28, "History"),
-            new Category(29, "Health"),
-            new Category(30, "Fitness"),
-            new Category(31, "Alternative"),
-            new Category(32, "Medicine"),
-            new Category(33, "Mental"),
-            new Category(34, "Nutrition"),
-            new Category(35, "Sexuality"),
-            new Category(36, "Kids"),
-            new Category(37, "Family"),
-            new Category(38, "Parenting"),
-            new Category(39, "Pets"),
-            new Category(40, "Animals"),
-            new Category(41, "Stories"),
-            new Category(42, "Leisure"),
-            new Category(43, "Animation"),
-            new Category(44, "Manga"),
-            new Category(45, "Automotive"),
-            new Category(46, "Aviation"),
-            new Category(47, "Crafts"),
-            new Category(48, "Games"),
-            new Category(49, "Hobbies"),
-            new Category(50, "Home"),
-            new Category(51, "Garden"),
-            new Category(52, "Video-Games"),
-            new Category(53, "Music"),
-            new Category(54, "Commentary"),
-            new Category(55, "News"),
-            new Category(56, "Daily"),
-            new Category(57, "Entertainment"),
-            new Category(58, "Government"),
-            new Category(59, "Politics"),
-            new Category(60, "Buddhism"),
-            new Category(61, "Christianity"),
-            new Category(62, "Hinduism"),
-            new Category(63, "Islam"),
-            new Category(64, "Judaism"),
-            new Category(65, "Religion"),
-            new Category(66, "Spirituality"),
-            new Category(67, "Science"),
-            new Category(68, "Astronomy"),
-            new Category(69, "Chemistry"),
-            new Category(70, "Earth"),
-            new Category(71, "Life"),
-            new Category(72, "Mathematics"),
-            new Category(73, "Natural"),
-            new Category(74, "Nature"),
-            new Category(75, "Physics"),
-            new Category(76, "Social"),
-            new Category(77, "Society"),
-            new Category(78, "Culture"),
-            new Category(79, "Documentary"),
-            new Category(80, "Personal"),
-            new Category(81, "Journals"),
-            new Category(82, "Philosophy"),
-            new Category(83, "Places"),
-            new Category(84, "Travel"),
-            new Category(85, "Relationships"),
-            new Category(86, "Sports"),
-            new Category(87, "Baseball"),
-            new Category(88, "Basketball"),
-            new Category(89, "Cricket"),
-            new Category(90, "Fantasy"),
-            new Category(91, "Football"),
-            new Category(92, "Golf"),
-            new Category(93, "Hockey"),
-            new Category(94, "Rugby"),
-            new Category(95, "Running"),
-            new Category(96, "Soccer"),
-            new Category(97, "Swimming"),
-            new Category(98, "Tennis"),
-            new Category(99, "Volleyball"),
-            new Category(100, "Wilderness"),
-            new Category(101, "Wrestling"),
-            new Category(102, "Technology"),
-            new Category(103, "True Crime"),
-            new Category(104, "TV"),
-            new Category(105, "Film"),
-            new Category(106, "After-Shows"),
-            new Category(107, "Reviews"),
-            new Category(108, "Climate"),
-            new Category(109, "Weather"),
-            new Category(110, "Tabletop"),
-            new Category(111, "Role-Playing"),
-            new Category(112, "Cryptocurrency"),
+            new(1, "Arts"),
+            new(2, "Books"),
+            new(3, "Design"),
+            new(4, "Fashion"),
+            new(5, "Beauty"),
+            new(6, "Food"),
+            new(7, "Performing"),
+            new(8, "Visual"),
+            new(9, "Business"),
+            new(10, "Careers"),
+            new(11, "Entrepreneurship"),
+            new(12, "Investing"),
+            new(13, "Management"),
+            new(14, "Marketing"),
+            new(15, "Non-Profit"),
+            new(16, "Comedy"),
+            new(17, "Interviews"),
+            new(18, "Improv"),
+            new(19, "Stand-Up"),
+            new(20, "Education"),
+            new(21, "Courses"),
+            new(22, "How-To"),
+            new(23, "Language"),
+            new(24, "Learning"),
+            new(25, "Self-Improvement"),
+            new(26, "Fiction"),
+            new(27, "Drama"),
+            new(28, "History"),
+            new(29, "Health"),
+            new(30, "Fitness"),
+            new(31, "Alternative"),
+            new(32, "Medicine"),
+            new(33, "Mental"),
+            new(34, "Nutrition"),
+            new(35, "Sexuality"),
+            new(36, "Kids"),
+            new(37, "Family"),
+            new(38, "Parenting"),
+            new(39, "Pets"),
+            new(40, "Animals"),
+            new(41, "Stories"),
+            new(42, "Leisure"),
+            new(43, "Animation"),
+            new(44, "Manga"),
+            new(45, "Automotive"),
+            new(46, "Aviation"),
+            new(47, "Crafts"),
+            new(48, "Games"),
+            new(49, "Hobbies"),
+            new(50, "Home"),
+            new(51, "Garden"),
+            new(52, "Video-Games"),
+            new(53, "Music"),
+            new(54, "Commentary"),
+            new(55, "News"),
+            new(56, "Daily"),
+            new(57, "Entertainment"),
+            new(58, "Government"),
+            new(59, "Politics"),
+            new(60, "Buddhism"),
+            new(61, "Christianity"),
+            new(62, "Hinduism"),
+            new(63, "Islam"),
+            new(64, "Judaism"),
+            new(65, "Religion"),
+            new(66, "Spirituality"),
+            new(67, "Science"),
+            new(68, "Astronomy"),
+            new(69, "Chemistry"),
+            new(70, "Earth"),
+            new(71, "Life"),
+            new(72, "Mathematics"),
+            new(73, "Natural"),
+            new(74, "Nature"),
+            new(75, "Physics"),
+            new(76, "Social"),
+            new(77, "Society"),
+            new(78, "Culture"),
+            new(79, "Documentary"),
+            new(80, "Personal"),
+            new(81, "Journals"),
+            new(82, "Philosophy"),
+            new(83, "Places"),
+            new(84, "Travel"),
+            new(85, "Relationships"),
+            new(86, "Sports"),
+            new(87, "Baseball"),
+            new(88, "Basketball"),
+            new(89, "Cricket"),
+            new(90, "Fantasy"),
+            new(91, "Football"),
+            new(92, "Golf"),
+            new(93, "Hockey"),
+            new(94, "Rugby"),
+            new(95, "Running"),
+            new(96, "Soccer"),
+            new(97, "Swimming"),
+            new(98, "Tennis"),
+            new(99, "Volleyball"),
+            new(100, "Wilderness"),
+            new(101, "Wrestling"),
+            new(102, "Technology"),
+            new(103, "True Crime"),
+            new(104, "TV"),
+            new(105, "Film"),
+            new(106, "After-Shows"),
+            new(107, "Reviews"),
+            new(108, "Climate"),
+            new(109, "Weather"),
+            new(110, "Tabletop"),
+            new(111, "Role-Playing"),
+            new(112, "Cryptocurrency"),
         };
 
-    public List<TrendingPodcast> TrendingPodcasts
+    public const string ArtsKey = "Arts and Design";
+    public const string BusinessKey = "Business and Finance";
+    public const string ComedyKey = "Comedy";
+    public const string EducationKey = "Education and Learning";
+    public const string HealthKey = "Health and Wellness";
+    public const string FamilyKey = "Family and Lifestyle";
+    public const string EntertainmentKey = "Entertainment";
+    public const string HobbyKey = "Hobbies and Leisure";
+    public const string NewsKey = "News and Politics";
+    public const string ReligionKey = "Religion and Spirituality";
+    public const string ScienceKey = "Science and Nature";
+    public const string SocietyKey = "Society and Culture";
+    public const string SportKey = "Sport";
+    public const string TechnologyKey = "Technology";
+    public const string TrueCrimeKey = "TrueCrime";
+    public const string TvKey = "TV and Film";
+    public const string GamingKey = "Gaming";
+
+    public List<string> GroupedCategoryNames =>
+        [
+            ArtsKey,
+            BusinessKey,
+            ComedyKey,
+            EducationKey,
+            HealthKey,
+            FamilyKey,
+            EntertainmentKey,
+            HobbyKey,
+            NewsKey,
+            ReligionKey,
+            ScienceKey,
+            SocietyKey,
+            SportKey,
+            TechnologyKey,
+            TrueCrimeKey,
+            TvKey,
+            GamingKey
+        ];
+
+    public Dictionary<string, List<Category>> GroupedCategories { get; } =
+        new()
+        {
+            {
+                ArtsKey,
+
+                [
+                    new(1, "Arts"),
+                    new(2, "Books"),
+                    new(3, "Design"),
+                    new(4, "Fashion"),
+                    new(5, "Beauty"),
+                    new(7, "Performing"),
+                    new(8, "Visual")
+                ]
+            },
+            {
+                BusinessKey,
+
+                [
+                    new(9, "Business"),
+                    new(10, "Careers"),
+                    new(11, "Entrepreneurship"),
+                    new(12, "Investing"),
+                    new(13, "Management"),
+                    new(14, "Marketing"),
+                    new(15, "Non-Profit")
+                ]
+            },
+            {
+                ComedyKey,
+                [new(16, "Comedy"), new(17, "Interviews"), new(18, "Improv"), new(19, "Stand-Up")]
+            },
+            {
+                EducationKey,
+
+                [
+                    new(20, "Education"),
+                    new(21, "Courses"),
+                    new(22, "How-To"),
+                    new(23, "Language"),
+                    new(24, "Learning"),
+                    new(25, "Self-Improvement"),
+                    new(28, "History")
+                ]
+            },
+            {
+                HealthKey,
+
+                [
+                    new(29, "Health"),
+                    new(30, "Fitness"),
+                    new(31, "Alternative"),
+                    new(32, "Medicine"),
+                    new(33, "Mental"),
+                    new(34, "Nutrition"),
+                    new(35, "Sexuality")
+                ]
+            },
+            {
+                FamilyKey,
+
+                [
+                    new(36, "Kids"),
+                    new(37, "Family"),
+                    new(38, "Parenting"),
+                    new(39, "Pets"),
+                    new(40, "Animals")
+                ]
+            },
+            {
+                EntertainmentKey,
+
+                [
+                    new(26, "Fiction"),
+                    new(27, "Drama"),
+                    new(41, "Stories"),
+                    new(43, "Animation"),
+                    new(44, "Manga"),
+                    new(45, "Automotive"),
+                    new(46, "Aviation"),
+                    new(53, "Music")
+                ]
+            },
+            {
+                HobbyKey,
+
+                [
+                    new(6, "Food"),
+                    new(42, "Leisure"),
+                    new(47, "Crafts"),
+                    new(49, "Hobbies"),
+                    new(50, "Home"),
+                    new(51, "Garden")
+                ]
+            },
+            {
+                NewsKey,
+
+                [
+                    new(54, "Commentary"),
+                    new(55, "News"),
+                    new(56, "Daily"),
+                    new(57, "Entertainment"),
+                    new(58, "Government"),
+                    new(59, "Politics")
+                ]
+            },
+            {
+                ReligionKey,
+
+                [
+                    new(60, "Buddhism"),
+                    new(61, "Christianity"),
+                    new(62, "Hinduism"),
+                    new(63, "Islam"),
+                    new(64, "Judaism"),
+                    new(65, "Religion"),
+                    new(66, "Spirituality")
+                ]
+            },
+            {
+                ScienceKey,
+
+                [
+                    new(67, "Science"),
+                    new(68, "Astronomy"),
+                    new(69, "Chemistry"),
+                    new(70, "Earth"),
+                    new(71, "Life"),
+                    new(72, "Mathematics"),
+                    new(73, "Natural"),
+                    new(74, "Nature"),
+                    new(75, "Physics"),
+                    new(108, "Climate"),
+                    new(109, "Weather")
+                ]
+            },
+            {
+                SocietyKey,
+
+                [
+                    new(76, "Social"),
+                    new(77, "Society"),
+                    new(78, "Culture"),
+                    new(79, "Documentary"),
+                    new(80, "Personal"),
+                    new(81, "Journals"),
+                    new(82, "Philosophy"),
+                    new(83, "Places"),
+                    new(84, "Travel"),
+                    new(85, "Relationship")
+                ]
+            },
+            {
+                SportKey,
+
+                [
+                    new(86, "Sports"),
+                    new(87, "Baseball"),
+                    new(88, "Basketball"),
+                    new(89, "Cricket"),
+                    new(90, "Fantasy"),
+                    new(91, "Football"),
+                    new(92, "Golf"),
+                    new(93, "Hockey"),
+                    new(94, "Rugby"),
+                    new(95, "Running"),
+                    new(96, "Soccer"),
+                    new(97, "Swimming"),
+                    new(98, "Tennis"),
+                    new(99, "Volleyball"),
+                    new(100, "Wilderness"),
+                    new(101, "Wrestling")
+                ]
+            },
+            { TechnologyKey, [new(102, "Technology"), new(112, "Cryptocurrency")] },
+            { TrueCrimeKey, [new(103, "True Crime")] },
+            {
+                TvKey,
+                [new(104, "TV"), new(105, "Film"), new(106, "After-Show"), new(107, "Reviews")]
+            },
+            {
+                GamingKey,
+
+                [
+                    new(48, "Games"),
+                    new(52, "Video-Games"),
+                    new(110, "Tabletop"),
+                    new(111, "Role-Playing")
+                ]
+            }
+        };
+
+    public List<TrendingPodcast> TopTrendingPodcasts
     {
         get
         {
-            if (!_trendingPodcasts.Any())
+            if (_trendingPodcasts.Count == 0)
             {
-                GetTrendingPodcasts();
+                GetTrendingPodcasts(_trendingPodcasts);
             }
 
             return _trendingPodcasts;
         }
     }
 
-    private void GetTrendingPodcasts()
+    public List<TrendingPodcast> NewsTrendingPodcasts
+    {
+        get
+        {
+            if (_newTrendingPodcasts.Count == 0)
+            {
+                GetTrendingPodcasts(_newTrendingPodcasts);
+            }
+            return _newTrendingPodcasts;
+        }
+    }
+
+    public List<TrendingPodcast> ComedyTrendingPodcasts
+    {
+        get
+        {
+            if (_comedyTrendingPodcasts.Count == 0)
+            {
+                GetTrendingPodcasts(_comedyTrendingPodcasts);
+            }
+            return _comedyTrendingPodcasts;
+        }
+    }
+
+    public List<TrendingPodcast> ScienceTrendingPodcasts
+    {
+        get
+        {
+            if (_scienceTrendingPodcasts.Count == 0)
+            {
+                GetTrendingPodcasts(_scienceTrendingPodcasts);
+            }
+            return _scienceTrendingPodcasts;
+        }
+    }
+
+    public List<TrendingPodcast> TrueCrimeTrendingPodcasts
+    {
+        get
+        {
+            if (_trueCrimeTrendingPodcasts.Count == 0)
+            {
+                GetTrendingPodcasts(_trueCrimeTrendingPodcasts);
+            }
+            return _trueCrimeTrendingPodcasts;
+        }
+    }
+
+    private void GetTrendingPodcasts(List<TrendingPodcast> trendingPodcasts)
     {
         foreach (
             var podcast in new Faker<TrendingPodcast>()
@@ -159,10 +443,10 @@ public class BogusService
                 .ToList()
         )
         {
-            _trendingPodcasts.Add(podcast);
+            trendingPodcasts.Add(podcast);
         }
 
-        foreach (var trendingPodcast in _trendingPodcasts)
+        foreach (var trendingPodcast in trendingPodcasts)
         {
             foreach (
                 var category in _categories
