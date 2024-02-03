@@ -19,6 +19,8 @@
   <ItemGroup>
     <None Remove="Controls\CarouselControl.xaml" />
     <None Remove="Controls\CarouselItemControl.xaml" />
+    <None Remove="Styles\CustomStyles.xaml" />
+    <None Remove="Styles\HeaderControlStyle.xaml" />
     <None Remove="Views\Pages\DiscoverView.xaml" />
     <None Remove="Views\Pages\PlaylistsView.xaml" />
     <None Remove="Views\Pages\QueueView.xaml" />
@@ -69,6 +71,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Styles\CustomStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\HeaderControlStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\CarouselItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
