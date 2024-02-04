@@ -14,14 +14,12 @@
     mc:Ignorable="d">
     <Grid
         x:Name="RootGrid"
-        Width="200"
         Margin="8"
         Background="Transparent">
         <animations:Explicit.Animations>
             <animations:AnimationSet x:Name="RootGridPressedAnimation">
                 <animations:OpacityDropShadowAnimation To="0" />
             </animations:AnimationSet>
-
             <animations:AnimationSet x:Name="RootGridReleasedAnimation">
                 <animations:OpacityDropShadowAnimation To="0.4" />
             </animations:AnimationSet>
@@ -72,6 +70,7 @@
             </Grid>
         </Border>
         <Grid
+            x:Name="DetailsGrid"
             winUi:VisualExtensions.NormalizedCenterPoint="0.5"
             Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
             CornerRadius="4">
@@ -145,14 +144,30 @@
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SubstituteIcon.FontSize" Value="50" />
+                        <Setter Target="PodcastImage.Width" Value="200" />
+                        <Setter Target="PodcastImage.Height" Value="112" />
+                        <Setter Target="RootGrid.Width" Value="200" />
+                        <Setter Target="RootGrid.Height" Value="112" />
+                        <Setter Target="DescriptionText.MaxLines" Value="3" />
+                        <Setter Target="DetailsGrid.Height" Value="112" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="1280" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PodcastImage.Width" Value="300" />
                         <Setter Target="SubstituteIcon.FontSize" Value="108" />
+                        <Setter Target="PodcastImage.Width" Value="300" />
                         <Setter Target="PodcastImage.Height" Value="169" />
                         <Setter Target="RootGrid.Width" Value="300" />
+                        <Setter Target="RootGrid.Height" Value="169" />
                         <Setter Target="DescriptionText.MaxLines" Value="6" />
+                        <Setter Target="DetailsGrid.Height" Value="169" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
