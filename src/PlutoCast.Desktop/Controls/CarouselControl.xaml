@@ -36,6 +36,7 @@
             ScrollViewer.HorizontalScrollBarVisibility="Hidden"
             ScrollViewer.HorizontalScrollMode="Disabled"
             ScrollViewer.VerticalScrollMode="Disabled"
+            SelectionMode="None"
             SizeChanged="ListView_OnSizeChanged">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -69,13 +70,6 @@
             CornerRadius="4 0 0 4"
             IsEnabled="False"
             ToolTipService.ToolTip="Scroll left">
-            <winUi:Effects.Shadow>
-                <media:AttachedCardShadow
-                    BlurRadius="8"
-                    CornerRadius="4"
-                    Opacity="0.4"
-                    Offset="-2,2" />
-            </winUi:Effects.Shadow>
             <FontIcon FontSize="16" Glyph="&#xEDD9;" />
         </RepeatButton>
         <RepeatButton
@@ -92,13 +86,6 @@
             Click="ForwardsButton_OnClick"
             CornerRadius="0 4 4 0"
             ToolTipService.ToolTip="Scroll right">
-            <winUi:Effects.Shadow>
-                <media:AttachedCardShadow
-                    BlurRadius="8"
-                    CornerRadius="4"
-                    Opacity="0.4"
-                    Offset="2,2" />
-            </winUi:Effects.Shadow>
             <FontIcon FontSize="16" Glyph="&#xEDDA;" />
         </RepeatButton>
         <VisualStateManager.VisualStateGroups>
