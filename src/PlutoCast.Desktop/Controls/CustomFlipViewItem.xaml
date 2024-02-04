@@ -1,0 +1,156 @@
+<UserControl
+    x:Class="PlutoCast.Desktop.Controls.CustomFlipViewItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:PlutoCast.Desktop.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:PlutoCast.Desktop.Models"
+    xmlns:winUi="using:CommunityToolkit.Labs.WinUI"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <LinearGradientBrush x:Key="OverlayGradientBrush" Opacity="1.0" StartPoint="1 0" EndPoint="0 0">
+                        <GradientStop Offset="0.00" Color="#00000000" />
+                        <GradientStop Offset="0.30" Color="#4D000000" />
+                        <GradientStop Offset="0.50" Color="#80000000" />
+                        <GradientStop Offset="1.00" Color="#CC000000" />
+                    </LinearGradientBrush>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <LinearGradientBrush x:Key="OverlayGradientBrush" Opacity="1.0" StartPoint="1 0" EndPoint="0 0">
+                        <GradientStop Offset="0.00" Color="#00FFFFFF" />
+                        <GradientStop Offset="0.30" Color="#4DFFFFFF" />
+                        <GradientStop Offset="0.50" Color="#80FFFFFF" />
+                        <GradientStop Offset="1.00" Color="#CCFFFFFF" />
+                    </LinearGradientBrush>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Canvas.ZIndex="1">
+            <Grid
+                Padding="24"
+                VerticalAlignment="Bottom"
+                RowSpacing="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Style="{StaticResource TitleLargeTextBlockStyle}"
+                    Text="{x:Bind Podcast.Title}" />
+                <ItemsControl
+                    Grid.Row="1"
+                    Margin="0,0,0,0"
+                    ItemsSource="{x:Bind Podcast.Categories}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:WrapPanel
+                                HorizontalSpacing="8"
+                                Orientation="Horizontal"
+                                StretchChild="None"
+                                VerticalSpacing="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:Category">
+                            <Button Style="{StaticResource AccentButtonStyle}">
+                                <TextBlock
+                                    Margin="-4"
+                                    FontSize="12"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind CategoryName}" />
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock
+                    Grid.Row="2"
+                    MaxLines="8"
+                    Opacity="0.8"
+                    Style="{StaticResource BodyTextBlockStyle}"
+                    Text="{x:Bind Podcast.Description}"
+                    TextAlignment="Start"
+                    TextTrimming="WordEllipsis"
+                    TextWrapping="WrapWholeWords" />
+                <TextBlock
+                    Grid.Row="3"
+                    Opacity="0.6"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Podcast.Author}" />
+            </Grid>
+        </Grid>
+        <Grid
+            x:Name="Image"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="0"
+            BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+            BorderThickness="0"
+            CornerRadius="4">
+            <Border x:Name="BorderImage" CornerRadius="4">
+                <Border.Background>
+                    <ImageBrush Stretch="UniformToFill">
+                        <ImageBrush.ImageSource>
+                            <BitmapImage
+                                DecodePixelHeight="1080"
+                                DecodePixelWidth="1920"
+                                ImageFailed="BitmapImage_OnImageFailed"
+                                ImageOpened="BitmapImage_OnImageOpened"
+                                UriSource="{x:Bind Podcast.Artwork, Mode=OneWay}" />
+                        </ImageBrush.ImageSource>
+                    </ImageBrush>
+                </Border.Background>
+            </Border>
+            <winUi:Shimmer x:Name="Shimmer" IsActive="True" />
+            <FontIcon
+                x:Name="SubstituteIcon"
+                Margin="20"
+                VerticalAlignment="Center"
+                FontSize="252"
+                Glyph="&#xE720;"
+                Visibility="Collapsed" />
+            <Border
+                x:Name="ImageOverlay"
+                Background="{ThemeResource OverlayGradientBrush}"
+                Visibility="Visible" />
+        </Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Image.(Grid.Column)" Value="0" />
+                        <Setter Target="Image.Margin" Value="0" />
+                        <Setter Target="ImageOverlay.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1280" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Image.(Grid.Column)" Value="1" />
+                        <Setter Target="Image.Margin" Value="20" />
+                        <Setter Target="Image.Width" Value="782" />
+                        <Setter Target="ImageOverlay.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</UserControl>
