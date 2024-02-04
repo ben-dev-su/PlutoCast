@@ -7,6 +7,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:lab="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:PlutoCast.Desktop.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
@@ -41,7 +42,10 @@
             <Border.Background>
                 <ImageBrush Stretch="UniformToFill">
                     <ImageBrush.ImageSource>
-                        <BitmapImage ImageFailed="BitmapImage_OnImageFailed" UriSource="{x:Bind Image}" />
+                        <BitmapImage
+                            ImageFailed="BitmapImage_OnImageFailed"
+                            ImageOpened="BitmapImage_OnImageOpened"
+                            UriSource="{x:Bind Image}" />
                     </ImageBrush.ImageSource>
                 </ImageBrush>
             </Border.Background>
@@ -69,6 +73,7 @@
                 </Border>
             </Grid>
         </Border>
+        <lab:Shimmer x:Name="Shimmer" />
         <Grid
             x:Name="DetailsGrid"
             Margin="0"

@@ -65,6 +65,18 @@ public sealed partial class CarouselItemControl : UserControl
 
     private void BitmapImage_OnImageFailed(object sender, ExceptionRoutedEventArgs e)
     {
+        if (string.IsNullOrEmpty(e.ErrorMessage))
+            return;
+
         SubstituteIcon.Visibility = Visibility.Visible;
+        Shimmer.IsActive = false;
+        Shimmer.Visibility = Visibility.Collapsed;
+    }
+
+    private void BitmapImage_OnImageOpened(object sender, RoutedEventArgs e)
+    {
+        SubstituteIcon.Visibility = Visibility.Collapsed;
+        Shimmer.IsActive = false;
+        Shimmer.Visibility = Visibility.Collapsed;
     }
 }
