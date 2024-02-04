@@ -2,12 +2,321 @@
     x:Class="PlutoCast.Desktop.Views.Pages.DiscoverView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:CommunityToolkit.WinUI.Animations"
+    xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
+    xmlns:controls="using:PlutoCast.Desktop.Controls"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:PlutoCast.Desktop.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:models="using:PlutoCast.Desktop.Models"
+    xmlns:winUi="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="CategoryTemplate">
+            <ItemContainer Margin="6">
+                <winUi:Effects.Shadow>
+                    <media:AttachedCardShadow
+                        BlurRadius="8"
+                        CornerRadius="4"
+                        Opacity="0.0"
+                        Offset="0,2" />
+                </winUi:Effects.Shadow>
+                <Border
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4">
+                    <TextBlock
+                        Margin="12"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{Binding}" />
+                </Border>
+                <animations:Explicit.Animations>
+                    <animations:AnimationSet x:Name="EnteredBackgroundAnimation">
+                        <animations:OpacityDropShadowAnimation To="0.4" />
+                        <animations:TranslationAnimation To="0, -4, 0" />
+                    </animations:AnimationSet>
+                    <animations:AnimationSet x:Name="ExitedBackgroundAnimation">
+                        <animations:OpacityDropShadowAnimation To="0.0" />
+                        <animations:TranslationAnimation To="0, 0, 0" />
+                    </animations:AnimationSet>
+                </animations:Explicit.Animations>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="PointerEntered">
+                        <behaviors:StartAnimationAction Animation="{Binding ElementName=EnteredBackgroundAnimation}" />
+                    </core:EventTriggerBehavior>
+                    <core:EventTriggerBehavior EventName="PointerExited">
+                        <behaviors:StartAnimationAction Animation="{Binding ElementName=ExitedBackgroundAnimation}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </ItemContainer>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid>
-        <TextBlock Text="Discover" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid
+            Grid.Row="0"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+            BorderThickness="0,0,0,1">
+            <winUi:Effects.Shadow>
+                <media:AttachedCardShadow
+                    CornerRadius="4"
+                    Opacity="0.2"
+                    Offset="0,2" />
+            </winUi:Effects.Shadow>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                Grid.Column="0"
+                Margin="20,8,0,8"
+                Orientation="Horizontal"
+                Spacing="20">
+                <FontIcon
+                    Margin="0,0,0,0"
+                    FontSize="38"
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Glyph="&#xEDE4;" />
+                <TextBlock
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Text="Discover"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </StackPanel>
+            <CommandBar
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                DefaultLabelPosition="Right" />
+        </Grid>
+        <ScrollViewer Grid.Row="1">
+            <Grid Margin="0,10,0,0" RowSpacing="32">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <controls:CustomFlipView
+                        x:Name="TopTrendingGallery"
+                        Height="420"
+                        MaxWidth="1920"
+                        Background="{ThemeResource LayerFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        ItemsSource="{x:Bind ViewModel.TopTrendingPodcasts}"
+                        Translation="0 0 8">
+                        <controls:CustomFlipView.Shadow>
+                            <ThemeShadow />
+                        </controls:CustomFlipView.Shadow>
+                        <controls:CustomFlipView.ItemTemplate>
+                            <DataTemplate x:DataType="models:TrendingPodcast">
+                                <controls:CustomFlipViewItem Podcast="{Binding}" />
+                            </DataTemplate>
+                        </controls:CustomFlipView.ItemTemplate>
+                    </controls:CustomFlipView>
+                    <PipsPager
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        NumberOfPages="{x:Bind ViewModel.TopTrendingPodcasts.Count}"
+                        SelectedPageIndex="{x:Bind TopTrendingGallery.SelectedIndex, Mode=TwoWay}" />
+                </Grid>
+                <controls:HeaderControl Grid.Row="1" MaxWidth="1920">
+                    <controls:HeaderControl.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="20,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                Style="{StaticResource SubtitleTextBlockStyle}"
+                                Text="Science" />
+                            <HyperlinkButton
+                                Grid.Column="1"
+                                Margin="0,0,20,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon FontSize="16" Glyph="&#xE8A9;" />
+                                    <TextBlock Text="Explore more" />
+                                </StackPanel>
+                            </HyperlinkButton>
+                        </Grid>
+                    </controls:HeaderControl.Header>
+                    <controls:CarouselControl Margin="20,0" ItemsSource="{x:Bind ViewModel.ScienceTrendingPodcasts}" />
+                </controls:HeaderControl>
+
+                <controls:HeaderControl Grid.Row="2" MaxWidth="1920">
+                    <controls:HeaderControl.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="20,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                Style="{StaticResource SubtitleTextBlockStyle}"
+                                Text="News" />
+                            <HyperlinkButton
+                                Grid.Column="1"
+                                Margin="0,0,20,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon FontSize="16" Glyph="&#xE8A9;" />
+                                    <TextBlock Text="Explore more" />
+                                </StackPanel>
+                            </HyperlinkButton>
+                        </Grid>
+                    </controls:HeaderControl.Header>
+                    <controls:CarouselControl Margin="20,0" ItemsSource="{x:Bind ViewModel.NewsTrendingPodcasts}" />
+                </controls:HeaderControl>
+
+                <controls:HeaderControl Grid.Row="3" MaxWidth="1920">
+                    <controls:HeaderControl.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="20,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                Style="{StaticResource SubtitleTextBlockStyle}"
+                                Text="Comedy" />
+                            <HyperlinkButton
+                                Grid.Column="1"
+                                Margin="0,0,20,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon FontSize="16" Glyph="&#xE8A9;" />
+                                    <TextBlock Text="Explore more" />
+                                </StackPanel>
+                            </HyperlinkButton>
+                        </Grid>
+                    </controls:HeaderControl.Header>
+                    <controls:CarouselControl Margin="20,0" ItemsSource="{x:Bind ViewModel.ComedyTrendingPodcasts}" />
+                </controls:HeaderControl>
+
+                <controls:HeaderControl Grid.Row="4" MaxWidth="1920">
+                    <controls:HeaderControl.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="20,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                Style="{StaticResource SubtitleTextBlockStyle}"
+                                Text="True Crime" />
+                            <HyperlinkButton
+                                Grid.Column="1"
+                                Margin="0,0,20,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon FontSize="16" Glyph="&#xE8A9;" />
+                                    <TextBlock Text="Explore more" />
+                                </StackPanel>
+                            </HyperlinkButton>
+                        </Grid>
+                    </controls:HeaderControl.Header>
+                    <controls:CarouselControl Margin="20,0" ItemsSource="{x:Bind ViewModel.TrueCrimeTrendingPodcasts}" />
+                </controls:HeaderControl>
+
+                <controls:HeaderControl Grid.Row="5" MaxWidth="1920">
+                    <controls:HeaderControl.Header>
+                        <Grid
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                x:Name="CategoriesTextBlock"
+                                Grid.Column="0"
+                                Margin="20,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                Style="{StaticResource SubtitleTextBlockStyle}"
+                                Text="Categories" />
+                        </Grid>
+                    </controls:HeaderControl.Header>
+
+                    <ItemsView
+                        Margin="12,0,12,14"
+                        ItemTemplate="{StaticResource CategoryTemplate}"
+                        ItemsSource="{x:Bind ViewModel.GroupedCategoryNames}"
+                        SelectionMode="None">
+                        <ItemsView.Layout>
+                            <UniformGridLayout
+                                ItemsJustification="Center"
+                                ItemsStretch="Fill"
+                                MinColumnSpacing="0"
+                                MinItemHeight="150"
+                                MinItemWidth="150"
+                                MinRowSpacing="0" />
+                        </ItemsView.Layout>
+                    </ItemsView>
+                </controls:HeaderControl>
+            </Grid>
+        </ScrollViewer>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TopTrendingGallery.Height" Value="420" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1280" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TopTrendingGallery.Height" Value="480" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
