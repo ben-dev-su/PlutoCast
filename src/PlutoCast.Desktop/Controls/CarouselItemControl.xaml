@@ -12,22 +12,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:winUi="using:CommunityToolkit.WinUI"
+    Margin="8,10"
     mc:Ignorable="d">
-    <Grid
-        x:Name="RootGrid"
-        Margin="8"
-        Background="Transparent">
+    <Grid x:Name="RootGrid" Background="Transparent">
         <animations:Explicit.Animations>
             <animations:AnimationSet x:Name="HideShadowAnimation">
                 <animations:OpacityDropShadowAnimation To="0" />
             </animations:AnimationSet>
             <animations:AnimationSet x:Name="ShowShadowAnimation">
-                <animations:OpacityDropShadowAnimation To="0.4" />
+                <animations:OpacityDropShadowAnimation To="0.6" />
             </animations:AnimationSet>
         </animations:Explicit.Animations>
         <winUi:Effects.Shadow>
             <media:AttachedCardShadow
-                BlurRadius="12"
                 CornerRadius="4"
                 Opacity="0.0"
                 Offset="0,3" />
@@ -108,6 +105,7 @@
                 <TextBlock
                     Grid.Row="0"
                     FontWeight="Bold"
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                     Style="{StaticResource BodyTextBlockStyle}"
                     Text="{x:Bind Title}"
                     TextTrimming="CharacterEllipsis"
