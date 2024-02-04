@@ -5,9 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:PlutoCast.Desktop.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:models="using:PlutoCast.Desktop.Models"
-    xmlns:winUi="using:CommunityToolkit.WinUI"
     Loaded="CarouselControl_OnLoaded"
     mc:Ignorable="d">
     <UserControl.Resources>
@@ -19,7 +17,7 @@
                 Image="{x:Bind Image}" />
         </DataTemplate>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
