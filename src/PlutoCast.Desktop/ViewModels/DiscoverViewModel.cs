@@ -1,28 +1,37 @@
 ﻿using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Media.Animation;
+using PlutoCast.Desktop.Interfaces;
 using PlutoCast.Desktop.Models;
 using PlutoCast.Desktop.Services;
 
 namespace PlutoCast.Desktop.ViewModels;
 
 [ObservableObject]
-public partial class DiscoverViewModel : BaseViewModel
+public partial class DiscoverViewModel(
+    BogusService bogusService,
+    INavigationService navigationService
+) : BaseViewModel
 {
-    private readonly BogusService _bogusService;
-
-    public DiscoverViewModel(BogusService bogusService)
-    {
-        _bogusService = bogusService;
-    }
-
-    public List<TrendingPodcast> TopTrendingPodcasts => _bogusService.TopTrendingPodcasts;
-    public List<TrendingPodcast> NewsTrendingPodcasts => _bogusService.NewsTrendingPodcasts;
-    public List<TrendingPodcast> ComedyTrendingPodcasts => _bogusService.ComedyTrendingPodcasts;
-    public List<TrendingPodcast> ScienceTrendingPodcasts => _bogusService.ScienceTrendingPodcasts;
+    public List<TrendingPodcast> TopTrendingPodcasts => bogusService.TopTrendingPodcasts;
+    public List<TrendingPodcast> NewsTrendingPodcasts => bogusService.NewsTrendingPodcasts;
+    public List<TrendingPodcast> ComedyTrendingPodcasts => bogusService.ComedyTrendingPodcasts;
+    public List<TrendingPodcast> ScienceTrendingPodcasts => bogusService.ScienceTrendingPodcasts;
     public List<TrendingPodcast> TrueCrimeTrendingPodcasts =>
-        _bogusService.TrueCrimeTrendingPodcasts;
+        bogusService.TrueCrimeTrendingPodcasts;
 
-    public Dictionary<string, List<Category>> GroupedCategories => _bogusService.GroupedCategories;
+    public Dictionary<string, List<Category>> GroupedCategories => bogusService.GroupedCategories;
 
-    public List<string> GroupedCategoryNames => _bogusService.GroupedCategoryNames;
+    public List<string> GroupedCategoryNames => bogusService.GroupedCategoryNames;
+
+    [RelayCommand]
+    private void FlipViewClick(object? commandParameter)
+    {
+        navigationService.Navigate(
+            nameof(PodcastViewModel),
+            commandParameter,
+            new DrillInNavigationTransitionInfo()
+        );
+    }
 }

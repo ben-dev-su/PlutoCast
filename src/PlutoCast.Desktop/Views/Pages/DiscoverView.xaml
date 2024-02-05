@@ -120,6 +120,7 @@
                         BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                         BorderThickness="1"
                         CornerRadius="4"
+                        ItemClickCommand="{x:Bind ViewModel.FlipViewClickCommand}"
                         ItemsSource="{x:Bind ViewModel.TopTrendingPodcasts}">
                         <winUi:Effects.Shadow>
                             <media:AttachedCardShadow
