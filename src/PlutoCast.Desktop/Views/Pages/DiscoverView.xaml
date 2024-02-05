@@ -8,7 +8,6 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:local="using:PlutoCast.Desktop.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:models="using:PlutoCast.Desktop.Models"
@@ -121,11 +120,22 @@
                         BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                         BorderThickness="1"
                         CornerRadius="4"
-                        ItemsSource="{x:Bind ViewModel.TopTrendingPodcasts}"
-                        Translation="0 0 8">
-                        <controls:CustomFlipView.Shadow>
-                            <ThemeShadow />
-                        </controls:CustomFlipView.Shadow>
+                        ItemsSource="{x:Bind ViewModel.TopTrendingPodcasts}">
+                        <winUi:Effects.Shadow>
+                            <media:AttachedCardShadow
+                                BlurRadius="8"
+                                CornerRadius="4"
+                                Opacity="0.0"
+                                Offset="0,2" />
+                        </winUi:Effects.Shadow>
+                        <animations:Explicit.Animations>
+                            <animations:AnimationSet x:Name="FlipViewEnteredAnimation">
+                                <animations:OpacityDropShadowAnimation To="0.6" />
+                            </animations:AnimationSet>
+                            <animations:AnimationSet x:Name="FlipViewExitedAnimation">
+                                <animations:OpacityDropShadowAnimation To="0.0" />
+                            </animations:AnimationSet>
+                        </animations:Explicit.Animations>
                         <controls:CustomFlipView.ItemTemplate>
                             <DataTemplate x:DataType="models:TrendingPodcast">
                                 <controls:CustomFlipViewItem Podcast="{Binding}" />
@@ -137,6 +147,14 @@
                         HorizontalAlignment="Center"
                         NumberOfPages="{x:Bind ViewModel.TopTrendingPodcasts.Count}"
                         SelectedPageIndex="{x:Bind TopTrendingGallery.SelectedIndex, Mode=TwoWay}" />
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="PointerEntered">
+                            <behaviors:StartAnimationAction Animation="{x:Bind FlipViewEnteredAnimation}" />
+                        </core:EventTriggerBehavior>
+                        <core:EventTriggerBehavior EventName="PointerExited">
+                            <behaviors:StartAnimationAction Animation="{x:Bind FlipViewExitedAnimation}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
                 </Grid>
                 <controls:HeaderControl Grid.Row="1" MaxWidth="1920">
                     <controls:HeaderControl.Header>
