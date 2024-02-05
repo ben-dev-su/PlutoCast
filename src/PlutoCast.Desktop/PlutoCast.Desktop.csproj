@@ -24,6 +24,7 @@
     <None Remove="Styles\HeaderControlStyle.xaml" />
     <None Remove="Views\Pages\DiscoverView.xaml" />
     <None Remove="Views\Pages\PlaylistsView.xaml" />
+    <None Remove="Views\Pages\PodcastView.xaml" />
     <None Remove="Views\Pages\QueueView.xaml" />
     <None Remove="Views\Pages\SettingsView.xaml" />
     <None Remove="Views\Pages\ShellView.xaml" />
@@ -73,6 +74,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\Pages\PodcastView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\CustomFlipViewItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

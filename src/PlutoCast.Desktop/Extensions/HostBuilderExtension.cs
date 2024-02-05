@@ -43,6 +43,8 @@ public static class HostBuilderExtension
                 _ = services.AddTransient<ShellViewModel>();
                 _ = services.AddTransient<SubscriptionsView>();
                 _ = services.AddTransient<SubscriptionsViewModel>();
+                _ = services.AddTransient<PodcastView>();
+                _ = services.AddTransient<PodcastViewModel>();
             }
         );
     }

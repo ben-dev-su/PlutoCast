@@ -25,6 +25,7 @@ public class NavigationService : INavigationService
         RegisterView<QueueView, QueueViewModel>();
         RegisterView<SettingsView, SettingsViewModel>();
         RegisterView<SubscriptionsView, SubscriptionsViewModel>();
+        RegisterView<PodcastView, PodcastViewModel>();
     }
 
     public NavigationView? NavigationView
