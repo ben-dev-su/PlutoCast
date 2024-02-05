@@ -95,7 +95,7 @@ public class NavigationService : INavigationService
             if (!_views.TryGetValue(tag, out pageType))
             {
                 throw new InvalidOperationException(
-                    $"View not with the following tag not found: {tag}. Register view in PageService."
+                    $"View not with the following tag not found: {tag}. Register view in {nameof(NavigationService)}."
                 );
             }
         }
