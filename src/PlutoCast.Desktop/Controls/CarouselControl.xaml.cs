@@ -21,6 +21,7 @@ public sealed partial class CarouselControl : UserControl
     public CarouselControl()
     {
         InitializeComponent();
+        Unloaded += OnUnloaded;
     }
 
     public IList ItemsSource
@@ -94,5 +95,14 @@ public sealed partial class CarouselControl : UserControl
         {
             ForwardsButton.IsEnabled = true;
         }
+    }
+
+    private void OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        if (_scrollViewer is not null)
+        {
+            _scrollViewer.ViewChanging -= ScrollViewerOnViewChanging;
+        }
+        Unloaded -= OnUnloaded;
     }
 }

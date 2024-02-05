@@ -29,6 +29,7 @@ public sealed class CustomFlipView : FlipView
         PointerEntered += OnPointerEntered;
         PointerExited += OnPointerExited;
         PointerPressed += OnPointerPressed;
+        Unloaded += OnUnloaded;
         _timer.Start();
     }
 
@@ -78,5 +79,15 @@ public sealed class CustomFlipView : FlipView
     private void OnTick(DispatcherQueueTimer sender, object args)
     {
         SetValue(SelectedIndexProperty, (SelectedIndex + 1) % Items.Count);
+    }
+
+    private void OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        _timer.Stop();
+        _timer.Tick -= OnTick;
+        PointerEntered -= OnPointerEntered;
+        PointerExited -= OnPointerExited;
+        PointerPressed -= OnPointerPressed;
+        Unloaded -= OnUnloaded;
     }
 }
