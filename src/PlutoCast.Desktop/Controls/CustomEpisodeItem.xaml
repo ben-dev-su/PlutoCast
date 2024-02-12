@@ -1,0 +1,97 @@
+<UserControl
+    x:Class="PlutoCast.Desktop.Controls.CustomEpisodeItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:PlutoCast.Desktop.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.ContextFlyout>
+        <MenuFlyout x:Key="EpisodeFlyout" Placement="Right">
+            <MenuFlyoutItem Text="Play">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE768;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutSubItem Text="Add to">
+                <MenuFlyoutSubItem.Icon>
+                    <FontIcon Glyph="&#xECC8;" />
+                </MenuFlyoutSubItem.Icon>
+
+            </MenuFlyoutSubItem>
+            <MenuFlyoutSeparator />
+            <MenuFlyoutItem Click="DetailsFlyout_OnClick" Text="Details">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE946;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+    </UserControl.ContextFlyout>
+
+    <Grid
+        Height="108"
+        Margin="-12,2,-9,2"
+        Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
+        BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="4"
+        Translation="0 0 8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.Shadow>
+            <ThemeShadow />
+        </Grid.Shadow>
+        <Border
+            Grid.Column="0"
+            Width="80"
+            Height="80"
+            Margin="14,0,0,0"
+            CornerRadius="4">
+            <Grid>
+                <Image Stretch="UniformToFill">
+                    <Image.Source>
+                        <BitmapImage
+                            DecodePixelHeight="120"
+                            DecodePixelWidth="120"
+                            ImageFailed="BitmapImage_OnImageFailed"
+                            ImageOpened="BitmapImage_OnImageOpened"
+                            UriSource="{x:Bind Episode.Image, Mode=OneWay}" />
+                    </Image.Source>
+                </Image>
+                <FontIcon
+                    x:Name="SubstituteFontIcon"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="50"
+                    Glyph="&#xE720;"
+                    Visibility="Collapsed" />
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="14,8">
+            <StackPanel Spacing="4">
+                <TextBlock
+                    Opacity="0.6"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Episode.EpisodeInfo, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+                <TextBlock
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                    Text="{x:Bind Episode.Title, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+                <TextBlock
+                    MaxLines="2"
+                    Opacity=".8"
+                    Style="{StaticResource BodyTextBlockStyle}"
+                    Text="{x:Bind Episode.Description, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
