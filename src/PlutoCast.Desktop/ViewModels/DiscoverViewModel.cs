@@ -26,7 +26,7 @@ public partial class DiscoverViewModel(
     public List<string> GroupedCategoryNames => bogusService.GroupedCategoryNames;
 
     [RelayCommand]
-    private void FlipViewClick(object? commandParameter)
+    private void PodcastClick(object? commandParameter)
     {
         navigationService.Navigate(
             nameof(PodcastViewModel),

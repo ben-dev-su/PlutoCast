@@ -120,7 +120,7 @@
                         BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                         BorderThickness="1"
                         CornerRadius="4"
-                        ItemClickCommand="{x:Bind ViewModel.FlipViewClickCommand}"
+                        ItemClickCommand="{x:Bind ViewModel.PodcastClickCommand}"
                         ItemsSource="{x:Bind ViewModel.TopTrendingPodcasts}">
                         <winUi:Effects.Shadow>
                             <media:AttachedCardShadow
@@ -184,7 +184,10 @@
                             </HyperlinkButton>
                         </Grid>
                     </controls:HeaderControl.Header>
-                    <controls:CarouselControl Margin="20,0" ItemsSource="{x:Bind ViewModel.ScienceTrendingPodcasts}" />
+                    <controls:CarouselControl
+                        Margin="20,0"
+                        ItemClickCommand="{x:Bind ViewModel.PodcastClickCommand}"
+                        ItemsSource="{x:Bind ViewModel.ScienceTrendingPodcasts}" />
                 </controls:HeaderControl>
 
                 <controls:HeaderControl Grid.Row="2" MaxWidth="1920">
