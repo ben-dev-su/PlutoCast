@@ -1,37 +1,16 @@
-using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using PlutoCast.Desktop.Models;
 
 namespace PlutoCast.Desktop.Controls;
 
 public sealed partial class CarouselItemControl : UserControl
 {
-    public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
-        nameof(Title),
-        typeof(string),
+    public static readonly DependencyProperty PodcastProperty = DependencyProperty.Register(
+        nameof(Podcast),
+        typeof(TrendingPodcast),
         typeof(CarouselItemControl),
-        new PropertyMetadata(default(string))
-    );
-
-    public static readonly DependencyProperty AuthorProperty = DependencyProperty.Register(
-        nameof(Author),
-        typeof(string),
-        typeof(CarouselItemControl),
-        new PropertyMetadata(default(string))
-    );
-
-    public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(
-        nameof(Description),
-        typeof(string),
-        typeof(CarouselItemControl),
-        new PropertyMetadata(default(string))
-    );
-
-    public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
-        nameof(Image),
-        typeof(Uri),
-        typeof(CarouselItemControl),
-        new PropertyMetadata(default(Uri))
+        new PropertyMetadata(default(TrendingPodcast))
     );
 
     public CarouselItemControl()
@@ -39,28 +18,10 @@ public sealed partial class CarouselItemControl : UserControl
         InitializeComponent();
     }
 
-    public string Author
+    public TrendingPodcast Podcast
     {
-        get => (string)GetValue(AuthorProperty);
-        set => SetValue(AuthorProperty, value);
-    }
-
-    public string Description
-    {
-        get => (string)GetValue(DescriptionProperty);
-        set => SetValue(DescriptionProperty, value);
-    }
-
-    public Uri Image
-    {
-        get => (Uri)GetValue(ImageProperty);
-        set => SetValue(ImageProperty, value);
-    }
-
-    public string Title
-    {
-        get => (string)GetValue(TitleProperty);
-        set => SetValue(TitleProperty, value);
+        get => (TrendingPodcast)GetValue(PodcastProperty);
+        set => SetValue(PodcastProperty, value);
     }
 
     private void BitmapImage_OnImageFailed(object sender, ExceptionRoutedEventArgs e)

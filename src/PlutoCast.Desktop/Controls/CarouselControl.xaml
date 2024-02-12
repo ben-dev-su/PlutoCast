@@ -10,11 +10,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <DataTemplate x:Key="CarouselItem" x:DataType="models:TrendingPodcast">
-            <local:CarouselItemControl
-                Title="{x:Bind Title}"
-                Author="{x:Bind Author}"
-                Description="{x:Bind Description}"
-                Image="{x:Bind Image}" />
+            <local:CarouselItemControl Podcast="{Binding}" />
         </DataTemplate>
     </UserControl.Resources>
     <Grid Background="Transparent">

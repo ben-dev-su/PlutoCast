@@ -103,6 +103,5 @@ public sealed partial class CarouselControl : UserControl
         {
             _scrollViewer.ViewChanging -= ScrollViewerOnViewChanging;
         }
-        Unloaded -= OnUnloaded;
     }
 }

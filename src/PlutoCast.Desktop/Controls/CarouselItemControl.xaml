@@ -28,7 +28,7 @@
                             DecodePixelWidth="300"
                             ImageFailed="BitmapImage_OnImageFailed"
                             ImageOpened="BitmapImage_OnImageOpened"
-                            UriSource="{x:Bind Image}" />
+                            UriSource="{x:Bind Podcast.Image}" />
                     </ImageBrush.ImageSource>
                 </ImageBrush>
             </Border.Background>
@@ -50,7 +50,7 @@
                         FontWeight="Bold"
                         Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                         Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind Title}"
+                        Text="{x:Bind Podcast.Title}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap" />
                 </Border>
@@ -93,7 +93,7 @@
                     FontWeight="Bold"
                     Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind Title}"
+                    Text="{x:Bind Podcast.Title}"
                     TextTrimming="CharacterEllipsis"
                     TextWrapping="NoWrap" />
                 <TextBlock
@@ -102,7 +102,7 @@
                     MaxLines="3"
                     Opacity="0.8"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind Description}"
+                    Text="{x:Bind Podcast.Description}"
                     TextTrimming="CharacterEllipsis"
                     TextWrapping="Wrap" />
                 <TextBlock
@@ -111,7 +111,7 @@
                     Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
                     Opacity="0.6"
                     Style="{ThemeResource CaptionTextBlockStyle}"
-                    Text="{x:Bind Author}"
+                    Text="{x:Bind Podcast.Author}"
                     TextTrimming="CharacterEllipsis"
                     TextWrapping="NoWrap" />
             </Grid>
