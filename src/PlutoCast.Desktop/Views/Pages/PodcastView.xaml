@@ -2,12 +2,259 @@
     x:Class="PlutoCast.Desktop.Views.Pages.PodcastView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:controls1="using:PlutoCast.Desktop.Controls"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:PlutoCast.Desktop.Views.Pages"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:models="using:PlutoCast.Desktop.Models"
+    xmlns:winUi="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+        <SolidColorBrush x:Key="CommandBarBorderBrushOpen" Color="Transparent" />
+        <DataTemplate x:Name="ItemTemplate" x:DataType="models:Episode">
+            <controls1:CustomEpisodeItem Episode="{Binding}" />
+        </DataTemplate>
+        <Style BasedOn="{StaticResource DefaultToggleButtonStyle}" TargetType="ToggleButton" />
+    </Page.Resources>
 
     <Grid>
-        <TextBlock Text="Podcast" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid
+            x:Name="HeroHeader"
+            Grid.Row="0"
+            Height="250"
+            VerticalAlignment="Top">
+            <Border CornerRadius="8 8 0 0">
+                <Border.Background>
+                    <ImageBrush Stretch="UniformToFill">
+                        <ImageBrush.ImageSource>
+                            <BitmapImage
+                                DecodePixelHeight="130"
+                                DecodePixelWidth="240"
+                                UriSource="{x:Bind ViewModel.Podcast.Image, Mode=OneWay, FallbackValue='ms-appx:///Assets/Wide310x150Logo.scale-200.png'}" />
+                        </ImageBrush.ImageSource>
+                    </ImageBrush>
+                </Border.Background>
+                <Border Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
+            </Border>
+
+            <Grid
+                x:Name="HeroHeaderContentGrid"
+                Padding="12"
+                ColumnSpacing="24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="226" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border x:Name="HeaderImage" CornerRadius="10">
+                    <Image Width="226" Stretch="UniformToFill">
+                        <Image.Source>
+                            <BitmapImage
+                                DecodePixelHeight="370"
+                                DecodePixelWidth="500"
+                                UriSource="{x:Bind ViewModel.Podcast.Image, Mode=OneWay, TargetNullValue='ms-appx:///Assets/Wide310x150Logo.scale-200.png', FallbackValue='ms-appx:///Assets/Wide310x150Logo.scale-200.png'}" />
+                        </Image.Source>
+                    </Image>
+                </Border>
+
+                <Grid
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="TitleTextGrid"
+                        Grid.Row="0"
+                        VerticalAlignment="Top">
+                        <Border x:Name="ShadowTarget" />
+                        <TextBlock
+                            x:Name="TitleText"
+                            FontSize="28"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource AccentTextFillColorPrimaryBrush}"
+                            OpticalMarginAlignment="TrimSideBearings"
+                            Text="{x:Bind ViewModel.Podcast.Title, Mode=OneWay, FallbackValue={x:Null}}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+                            <winUi:Effects.Shadow>
+                                <winUi:AttachedDropShadow
+                                    BlurRadius="6"
+                                    CastTo="{x:Bind ShadowTarget}"
+                                    CornerRadius="0"
+                                    Offset="2"
+                                    Color="Black" />
+                            </winUi:Effects.Shadow>
+                        </TextBlock>
+                    </Grid>
+
+                    <TextBlock
+                        x:Name="PodcastMetaDataText"
+                        Grid.Row="1"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind ViewModel.PodcastMetaDataText, Mode=OneWay, FallbackValue={x:Null}}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+
+                    <TextBlock
+                        x:Name="DescriptionText"
+                        Grid.Row="2"
+                        Margin="0,12,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind ViewModel.Podcast.Description, Mode=OneWay, FallbackValue={x:Null}}"
+                        TextTrimming="WordEllipsis"
+                        TextWrapping="Wrap" />
+
+                    <ToggleButton
+                        x:Name="SubscribeButton"
+                        Grid.Row="3"
+                        MinWidth="200"
+                        Margin="0,16,0,0"
+                        Padding="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        IsThreeState="False">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="Checked" SourceObject="{Binding ElementName=SubscribeButton}">
+                                <core:ChangePropertyAction
+                                    PropertyName="Text"
+                                    TargetObject="{Binding ElementName=SubscribeTextBlock}"
+                                    Value="Unsubscribe" />
+                            </core:EventTriggerBehavior>
+                            <core:EventTriggerBehavior EventName="Unchecked" SourceObject="{Binding ElementName=SubscribeButton}">
+                                <core:ChangePropertyAction
+                                    PropertyName="Text"
+                                    TargetObject="{Binding ElementName=SubscribeTextBlock}"
+                                    Value="Subscribe" />
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock x:Name="SubscribeTextBlock" Text="Subscribe" />
+                        </StackPanel>
+                    </ToggleButton>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid
+            Grid.Row="1"
+            BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+            BorderThickness="0,1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <winUi:Effects.Shadow>
+                <media:AttachedCardShadow
+                    CornerRadius="0"
+                    Opacity="0.3"
+                    Offset="0,2" />
+            </winUi:Effects.Shadow>
+            <AutoSuggestBox
+                Grid.Column="0"
+                Margin="12,8"
+                AutoMaximizeSuggestionArea="True"
+                BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+                PlaceholderText="Search Episodes"
+                TextChanged="AutoSuggestBox_OnTextChanged"
+                UpdateTextOnSelect="False">
+                <AutoSuggestBox.QueryIcon>
+                    <AnimatedIcon>
+                        <AnimatedIcon.Source>
+                            <animatedVisuals:AnimatedFindVisualSource />
+                        </AnimatedIcon.Source>
+                        <AnimatedIcon.FallbackIconSource>
+                            <SymbolIconSource Symbol="Find" />
+                        </AnimatedIcon.FallbackIconSource>
+                    </AnimatedIcon>
+                </AutoSuggestBox.QueryIcon>
+            </AutoSuggestBox>
+            <CommandBar
+                Grid.Column="1"
+                Margin="0"
+                Padding="0"
+                DefaultLabelPosition="Right">
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton Icon="{winUi:FontIcon Glyph=&#xE768;}" Label="Play" />
+                    <AppBarButton Icon="{winUi:FontIcon Glyph=&#xE8B1;}" Label="Shuffle" />
+                    <AppBarButton Icon="Add" Label="Add">
+                        <Button.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutSubItem Text="Play Queue">
+                                    <MenuFlyoutSubItem.Icon>
+                                        <FontIcon Glyph="&#xE90B;" />
+                                    </MenuFlyoutSubItem.Icon>
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem Text="New Playlist">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE710;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </AppBarButton>
+                    <AppBarButton Icon="Refresh" Label="Refresh" />
+
+                    <AppBarButton
+                        AutomationProperties.Name="Sort"
+                        Icon="Sort"
+                        IsCompact="True"
+                        Label="Sort"
+                        ToolTipService.ToolTip="Sort">
+                        <Button.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem Tag="rating" Text="By rating" />
+                                <MenuFlyoutItem Tag="match" Text="By match" />
+                                <MenuFlyoutItem Tag="distance" Text="By distance" />
+                                <MenuFlyoutItem Tag="rating" Text="By rating" />
+                                <MenuFlyoutItem Tag="match" Text="By match" />
+                                <MenuFlyoutItem Tag="distance" Text="By distance" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.GetDetailsCommand}"
+                        CommandParameter="{x:Bind ViewModel.Podcast, Mode=OneWay}"
+                        Icon="{winUi:FontIcon Glyph=&#xE946;}"
+                        Label="Details" />
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
+        </Grid>
+
+        <ListView
+            x:Name="ListView"
+            Grid.Row="2"
+            IsItemClickEnabled="True"
+            IsMultiSelectCheckBoxEnabled="False"
+            ItemTemplate="{StaticResource ItemTemplate}"
+            ItemsSource="{x:Bind ViewModel.Episodes, Mode=OneWay}"
+            SelectionMode="Single">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel Margin="12,12" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
     </Grid>
 </Page>
