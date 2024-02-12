@@ -1,0 +1,236 @@
+<ContentDialog
+    x:Class="PlutoCast.Desktop.Controls.EpisodeDetailsContentControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:PlutoCast.Desktop.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winUi="using:CommunityToolkit.WinUI"
+    Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
+    mc:Ignorable="d">
+    <ContentDialog.Resources>
+        <Style BasedOn="{StaticResource DefaultContentDialogStyle}" TargetType="local:EpisodeDetailsContentControl" />
+    </ContentDialog.Resources>
+    <ContentDialog.Title>
+        <Grid ColumnSpacing="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border
+                Grid.Column="0"
+                Width="100"
+                Height="100"
+                CornerRadius="8">
+                <Grid>
+                    <Image Stretch="UniformToFill">
+                        <Image.Source>
+                            <BitmapImage
+                            ImageFailed="BitmapImage_OnImageFailed"
+                            ImageOpened="BitmapImage_OnImageOpened"
+                                DecodePixelHeight="200"
+                                DecodePixelWidth="200"
+                                UriSource="{x:Bind Episode.Image}" />
+                        </Image.Source>
+                    </Image>
+                    <FontIcon
+                        x:Name="SubstituteFontIcon"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="50"
+                        Glyph="&#xE720;"
+                        Visibility="Collapsed" />
+                </Grid>
+            </Border>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <local:HeaderControl Grid.Row="0">
+                    <local:HeaderControl.Header>
+                        <TextBlock
+                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Title" />
+                    </local:HeaderControl.Header>
+                    <TextBlock
+                        IsTextSelectionEnabled="True"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind Episode.Title}" />
+                </local:HeaderControl>
+
+                <local:HeaderControl Grid.Row="1">
+                    <local:HeaderControl.Header>
+                        <TextBlock
+                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Date Published" />
+                    </local:HeaderControl.Header>
+                    <TextBlock
+                        IsTextSelectionEnabled="True"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind Episode.DatePublishedPretty}" />
+                </local:HeaderControl>
+            </Grid>
+        </Grid>
+    </ContentDialog.Title>
+    <ScrollViewer winUi:ScrollViewerExtensions.VerticalScrollBarMargin="0 0 -20  0">
+        <Grid RowSpacing="8">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid
+                Grid.Row="0"
+                Background="Transparent"
+                RowSpacing="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Season" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Episode" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Episode.Season}" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Episode.EpisodeNumber}" />
+
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Episode Type" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Duration" />
+
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Episode.EpisodeType}" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Style="{StaticResource CaptionTextBlockStyle}">
+                    <Run Text="{x:Bind Episode.Duration}" />
+                    <Run Text="Min" />
+                </TextBlock>
+
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Language" />
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Explicit" />
+
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Episode.FeedLanguage}" />
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Episode.Explicit}" />
+            </Grid>
+
+            <local:HeaderControl Grid.Row="1">
+                <local:HeaderControl.Header>
+                    <TextBlock
+                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="Description" />
+                </local:HeaderControl.Header>
+                <TextBlock
+                    IsTextSelectionEnabled="True"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Episode.Description}" />
+            </local:HeaderControl>
+
+            <local:HeaderControl Grid.Row="2">
+                <local:HeaderControl.Header>
+                    <TextBlock
+                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="Feed Url" />
+                </local:HeaderControl.Header>
+                <TextBlock
+                    IsTextSelectionEnabled="True"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Episode.Link}"
+                    TextDecorations="Underline" />
+            </local:HeaderControl>
+
+            <local:HeaderControl Grid.Row="3">
+                <local:HeaderControl.Header>
+                    <TextBlock
+                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="Enclosure Url" />
+                </local:HeaderControl.Header>
+                <TextBlock
+                    IsTextSelectionEnabled="True"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Episode.EnclosureUrl}"
+                    TextDecorations="Underline" />
+            </local:HeaderControl>
+
+            <local:HeaderControl Grid.Row="4">
+                <local:HeaderControl.Header>
+                    <TextBlock
+                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="Transcript Url" />
+                </local:HeaderControl.Header>
+                <TextBlock
+                    IsTextSelectionEnabled="True"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Episode.TranscriptUrl}"
+                    TextDecorations="Underline" />
+            </local:HeaderControl>
+
+        </Grid>
+    </ScrollViewer>
+</ContentDialog>

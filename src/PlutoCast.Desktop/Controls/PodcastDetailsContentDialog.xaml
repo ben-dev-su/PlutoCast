@@ -1,0 +1,162 @@
+<ContentDialog
+    x:Class="PlutoCast.Desktop.Controls.PodcastDetailsContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:PlutoCast.Desktop.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:PlutoCast.Desktop.Models"
+    xmlns:winUi="using:CommunityToolkit.WinUI"
+    Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
+    mc:Ignorable="d">
+    <ContentDialog.Resources>
+        <Style BasedOn="{StaticResource DefaultContentDialogStyle}" TargetType="local:PodcastDetailsContentDialog" />
+    </ContentDialog.Resources>
+    <ContentDialog.Title>
+        <Grid ColumnSpacing="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border
+                Grid.Column="0"
+                Width="100"
+                Height="100"
+                CornerRadius="8">
+                <Grid>
+
+                    <Image Stretch="UniformToFill">
+                        <Image.Source>
+                            <BitmapImage
+                                DecodePixelHeight="200"
+                                DecodePixelWidth="200"
+                                ImageFailed="BitmapImage_OnImageFailed"
+                                ImageOpened="BitmapImage_OnImageOpened"
+                                UriSource="{x:Bind Podcast.Image}" />
+                        </Image.Source>
+                    </Image>
+                    <FontIcon
+                        x:Name="SubstituteFontIcon"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="50"
+                        Glyph="&#xE720;"
+                        Visibility="Collapsed" />
+                </Grid>
+            </Border>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <local:HeaderControl Grid.Row="0">
+                    <local:HeaderControl.Header>
+                        <TextBlock
+                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Title" />
+                    </local:HeaderControl.Header>
+                    <TextBlock
+                        IsTextSelectionEnabled="True"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind Podcast.Title}" />
+                </local:HeaderControl>
+
+                <local:HeaderControl Grid.Row="1">
+                    <local:HeaderControl.Header>
+                        <TextBlock
+                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Author" />
+                    </local:HeaderControl.Header>
+                    <TextBlock
+                        IsTextSelectionEnabled="True"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind Podcast.Author}" />
+                </local:HeaderControl>
+                <local:HeaderControl Grid.Row="2">
+                    <local:HeaderControl.Header>
+                        <TextBlock
+                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Last Update" />
+                    </local:HeaderControl.Header>
+                    <TextBlock
+                        IsTextSelectionEnabled="True"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind Podcast.NewestItemPublishedTime.LocalDateTime}" />
+                </local:HeaderControl>
+            </Grid>
+        </Grid>
+    </ContentDialog.Title>
+    <ScrollViewer winUi:ScrollViewerExtensions.VerticalScrollBarMargin="0 0 -20  0">
+        <Grid RowSpacing="8">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <local:HeaderControl Grid.Row="0">
+                <local:HeaderControl.Header>
+                    <TextBlock
+                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="Categories" />
+                </local:HeaderControl.Header>
+                <ItemsControl ItemsSource="{x:Bind Podcast.Categories}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:WrapPanel
+                                Padding="0,8"
+                                HorizontalSpacing="8"
+                                Orientation="Horizontal"
+                                StretchChild="None"
+                                VerticalSpacing="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:Category">
+                            <Button CornerRadius="8" Style="{StaticResource AccentButtonStyle}">
+                                <TextBlock
+                                    Margin="-4"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind CategoryName}" />
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </local:HeaderControl>
+
+            <local:HeaderControl Grid.Row="1">
+                <local:HeaderControl.Header>
+                    <TextBlock
+                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="Description" />
+                </local:HeaderControl.Header>
+                <TextBlock
+                    IsTextSelectionEnabled="True"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Podcast.Description}" />
+            </local:HeaderControl>
+
+            <local:HeaderControl Grid.Row="2">
+                <local:HeaderControl.Header>
+                    <TextBlock
+                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="Feed Url" />
+                </local:HeaderControl.Header>
+
+                <TextBlock
+                    IsTextSelectionEnabled="True"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Podcast.Url}"
+                    TextDecorations="Underline" />
+            </local:HeaderControl>
+        </Grid>
+    </ScrollViewer>
+</ContentDialog>

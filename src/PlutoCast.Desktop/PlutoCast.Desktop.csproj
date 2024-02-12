@@ -20,6 +20,8 @@
     <None Remove="Controls\CarouselControl.xaml" />
     <None Remove="Controls\CarouselItemControl.xaml" />
     <None Remove="Controls\CustomFlipViewItem.xaml" />
+    <None Remove="Controls\EpisodeDetailsContentControl.xaml" />
+    <None Remove="Controls\PodcastDetailsContentDialog.xaml" />
     <None Remove="Styles\CustomStyles.xaml" />
     <None Remove="Styles\HeaderControlStyle.xaml" />
     <None Remove="Views\Pages\DiscoverView.xaml" />
@@ -74,6 +76,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\EpisodeDetailsContentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\PodcastDetailsContentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Pages\PodcastView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
