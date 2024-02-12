@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Windows.Input;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -18,6 +19,14 @@ public sealed partial class CarouselControl : UserControl
         new PropertyMetadata(default(IList))
     );
 
+    public static readonly DependencyProperty ItemClickCommandProperty =
+        DependencyProperty.Register(
+            nameof(ItemClickCommand),
+            typeof(ICommand),
+            typeof(CarouselControl),
+            new PropertyMetadata(default(ICommand))
+        );
+
     public CarouselControl()
     {
         InitializeComponent();
@@ -28,6 +37,12 @@ public sealed partial class CarouselControl : UserControl
     {
         get => (IList)GetValue(ItemsSourceProperty);
         set => SetValue(ItemsSourceProperty, value);
+    }
+
+    public ICommand? ItemClickCommand
+    {
+        get => (ICommand)GetValue(ItemClickCommandProperty);
+        set => SetValue(ItemClickCommandProperty, value);
     }
 
     private void BackwardsButton_OnClick(object sender, RoutedEventArgs e)
@@ -102,6 +117,14 @@ public sealed partial class CarouselControl : UserControl
         if (_scrollViewer is not null)
         {
             _scrollViewer.ViewChanging -= ScrollViewerOnViewChanging;
+        }
+    }
+
+    private void OnItemClick(object sender, ItemClickEventArgs e)
+    {
+        if (ItemClickCommand is not null && ItemClickCommand.CanExecute(e.ClickedItem))
+        {
+            ItemClickCommand.Execute(e.ClickedItem);
         }
     }
 }
