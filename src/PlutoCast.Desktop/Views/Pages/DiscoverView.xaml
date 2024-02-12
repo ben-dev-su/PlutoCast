@@ -217,7 +217,10 @@
                             </HyperlinkButton>
                         </Grid>
                     </controls:HeaderControl.Header>
-                    <controls:CarouselControl Margin="20,0" ItemsSource="{x:Bind ViewModel.NewsTrendingPodcasts}" />
+                    <controls:CarouselControl
+                        Margin="20,0"
+                        ItemClickCommand="{x:Bind ViewModel.PodcastClickCommand}"
+                        ItemsSource="{x:Bind ViewModel.NewsTrendingPodcasts}" />
                 </controls:HeaderControl>
 
                 <controls:HeaderControl Grid.Row="3" MaxWidth="1920">
@@ -247,7 +250,10 @@
                             </HyperlinkButton>
                         </Grid>
                     </controls:HeaderControl.Header>
-                    <controls:CarouselControl Margin="20,0" ItemsSource="{x:Bind ViewModel.ComedyTrendingPodcasts}" />
+                    <controls:CarouselControl
+                        Margin="20,0"
+                        ItemClickCommand="{x:Bind ViewModel.PodcastClickCommand}"
+                        ItemsSource="{x:Bind ViewModel.ComedyTrendingPodcasts}" />
                 </controls:HeaderControl>
 
                 <controls:HeaderControl Grid.Row="4" MaxWidth="1920">
@@ -277,7 +283,10 @@
                             </HyperlinkButton>
                         </Grid>
                     </controls:HeaderControl.Header>
-                    <controls:CarouselControl Margin="20,0" ItemsSource="{x:Bind ViewModel.TrueCrimeTrendingPodcasts}" />
+                    <controls:CarouselControl
+                        Margin="20,0"
+                        ItemClickCommand="{x:Bind ViewModel.PodcastClickCommand}"
+                        ItemsSource="{x:Bind ViewModel.TrueCrimeTrendingPodcasts}" />
                 </controls:HeaderControl>
 
                 <controls:HeaderControl Grid.Row="5" MaxWidth="1920">
