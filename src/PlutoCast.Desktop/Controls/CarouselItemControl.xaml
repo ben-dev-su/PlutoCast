@@ -8,27 +8,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:lab="using:CommunityToolkit.Labs.WinUI"
-    xmlns:local="using:PlutoCast.Desktop.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:winUi="using:CommunityToolkit.WinUI"
     Margin="8,10"
     mc:Ignorable="d">
     <Grid x:Name="RootGrid" Background="Transparent">
-        <animations:Explicit.Animations>
-            <animations:AnimationSet x:Name="HideShadowAnimation">
-                <animations:OpacityDropShadowAnimation To="0" />
-            </animations:AnimationSet>
-            <animations:AnimationSet x:Name="ShowShadowAnimation">
-                <animations:OpacityDropShadowAnimation To="0.6" />
-            </animations:AnimationSet>
-        </animations:Explicit.Animations>
-        <winUi:Effects.Shadow>
-            <media:AttachedCardShadow
-                CornerRadius="4"
-                Opacity="0.0"
-                Offset="0,3" />
-        </winUi:Effects.Shadow>
         <Border
             x:Name="PodcastImage"
             Width="200"
@@ -40,6 +24,8 @@
                 <ImageBrush Stretch="UniformToFill">
                     <ImageBrush.ImageSource>
                         <BitmapImage
+                            DecodePixelHeight="225"
+                            DecodePixelWidth="300"
                             ImageFailed="BitmapImage_OnImageFailed"
                             ImageOpened="BitmapImage_OnImageOpened"
                             UriSource="{x:Bind Image}" />
@@ -133,17 +119,9 @@
         <interactivity:Interaction.Behaviors>
             <core:EventTriggerBehavior EventName="PointerEntered">
                 <behaviors:StartAnimationAction Animation="{Binding ElementName=PanelEnteredAnimation}" />
-                <behaviors:StartAnimationAction Animation="{Binding ElementName=ShowShadowAnimation}" />
             </core:EventTriggerBehavior>
             <core:EventTriggerBehavior EventName="PointerExited">
                 <behaviors:StartAnimationAction Animation="{Binding ElementName=PanelExitedAnimation}" />
-                <behaviors:StartAnimationAction Animation="{Binding ElementName=HideShadowAnimation}" />
-            </core:EventTriggerBehavior>
-            <core:EventTriggerBehavior EventName="PointerPressed">
-                <behaviors:StartAnimationAction Animation="{Binding ElementName=HideShadowAnimation}" />
-            </core:EventTriggerBehavior>
-            <core:EventTriggerBehavior EventName="PointerReleased">
-                <behaviors:StartAnimationAction Animation="{Binding ElementName=ShowShadowAnimation}" />
             </core:EventTriggerBehavior>
         </interactivity:Interaction.Behaviors>
         <VisualStateManager.VisualStateGroups>
