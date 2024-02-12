@@ -2,12 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bogus;
+using PlutoCast.Desktop.Enums;
 using PlutoCast.Desktop.Models;
 
 namespace PlutoCast.Desktop.Services;
 
 public class BogusService
 {
+    private readonly List<string> _enclosureUrlList =
+    [
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/tcou10.mp3",
+        "https://www.theincomparable.com/podcast/batmanuniversity302.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/recentlyread67.mp3",
+        "https://www.theincomparable.com/podcast/WoWep07.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/tpk429.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/sophomorelit153.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/acp71.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/smooch110.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/puck49.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/biff192.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/defocused368.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/dwf75.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/dragonmount25.mp3",
+        "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/fts5.mp3"
+    ];
     private readonly List<TrendingPodcast> _trendingPodcasts = [];
     private readonly List<TrendingPodcast> _newTrendingPodcasts = [];
     private readonly List<TrendingPodcast> _trueCrimeTrendingPodcasts = [];
@@ -426,15 +444,22 @@ public class BogusService
 
     private void GetTrendingPodcasts(List<TrendingPodcast> trendingPodcasts)
     {
+        var feedImageId = Random.Shared.Next(1, 900);
         foreach (
             var podcast in new Faker<TrendingPodcast>()
                 .RuleFor(p => p.Id, f => f.Random.Long(1000, 100000))
                 .RuleFor(p => p.Url, f => new Uri(f.Internet.Url()))
                 .RuleFor(p => p.Title, f => f.Commerce.ProductName())
-                .RuleFor(p => p.Description, f => f.Lorem.Sentences(f.Random.Int(2, 8)))
+                .RuleFor(p => p.Description, f => f.Lorem.Paragraphs(f.Random.Int(1, 8)))
                 .RuleFor(p => p.Author, f => f.Company.CompanyName())
-                .RuleFor(p => p.Image, f => new Uri(f.Image.PicsumUrl()))
-                .RuleFor(p => p.Artwork, f => new Uri(f.Image.PicsumUrl(2560, 1440)))
+                .RuleFor(
+                    p => p.Image,
+                    f => new Uri(f.Image.PicsumUrl(imageId: f.IndexFaker + feedImageId))
+                )
+                .RuleFor(
+                    p => p.Artwork,
+                    f => new Uri(f.Image.PicsumUrl(2560, 1440, imageId: f.IndexFaker + feedImageId))
+                )
                 .RuleFor(p => p.NewestItemPublishedTime, f => f.Date.PastOffset())
                 .RuleFor(p => p.ItunesId, f => f.Random.Long(1000, 100000))
                 .RuleFor(p => p.TrendScore, f => f.Random.Int(1, 20))
@@ -457,6 +482,45 @@ public class BogusService
             {
                 trendingPodcast.AddCategory(category);
             }
+        }
+    }
+
+    public IEnumerable<Episode> GetEpisodes(long podcastId)
+    {
+        var episodeCount = Random.Shared.Next(2, 50);
+        foreach (
+            var episode in new Faker<Episode>()
+                .RuleFor(p => p.Id, f => f.Random.Long(1000, 100000))
+                .RuleFor(p => p.Link, f => new Uri(f.Internet.Url()))
+                .RuleFor(p => p.Title, f => f.Commerce.ProductName())
+                .RuleFor(p => p.Description, f => f.Lorem.Paragraphs(f.Random.Int(2, 8)))
+                .RuleFor(p => p.DatePublished, f => f.Date.PastOffset())
+                .RuleFor(p => p.DatePublishedPretty, f => f.Date.Past(2).ToLongDateString())
+                .RuleFor(p => p.DateCrawled, f => f.Date.PastOffset())
+                .RuleFor(
+                    p => p.EnclosureUrl,
+                    f => f.PickRandom(_enclosureUrlList.Select(x => new Uri(x)))
+                )
+                .RuleFor(p => p.EnclosureLength, f => f.Random.Long(1000, 1000000))
+                .RuleFor(p => p.Duration, f => f.Random.Long(5, 480))
+                .RuleFor(p => p.Explicit, f => f.Random.Bool(0.8f))
+                .RuleFor(p => p.EpisodeNumber, f => f.IndexVariable++)
+                .RuleFor(p => p.EpisodeType, f => f.PickRandom<EpisodeType>())
+                .RuleFor(p => p.Season, f => f.Random.Int(1, 6))
+                .RuleFor(p => p.Image, f => new Uri(f.Image.PicsumUrl()))
+                .RuleFor(p => p.FeedItunesId, f => f.Random.Long(1000, 100000))
+                .RuleFor(p => p.FeedImage, f => new Uri(f.Image.PicsumUrl()))
+                .RuleFor(p => p.FeedId, _ => podcastId)
+                .RuleFor(p => p.FeedLanguage, _ => "en")
+                .RuleFor(p => p.FeedDead, f => f.Random.Bool(0.1f))
+                .RuleFor(
+                    p => p.TranscriptUrl,
+                    _ => new Uri("https://mp3s.nashownotes.com/NA-1322-Captions.srt")
+                )
+                .GenerateLazy(episodeCount)
+        )
+        {
+            yield return episode;
         }
     }
 }
