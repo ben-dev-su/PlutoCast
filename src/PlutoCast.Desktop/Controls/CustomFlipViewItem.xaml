@@ -14,16 +14,14 @@
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Dark">
                     <LinearGradientBrush x:Key="OverlayGradientBrush" Opacity="1.0" StartPoint="1 0" EndPoint="0 0">
-                        <GradientStop Offset="0.00" Color="#00000000" />
-                        <GradientStop Offset="0.30" Color="#4D000000" />
+                        <GradientStop Offset="0.00" Color="#4D000000" />
                         <GradientStop Offset="0.50" Color="#80000000" />
                         <GradientStop Offset="1.00" Color="#CC000000" />
                     </LinearGradientBrush>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <LinearGradientBrush x:Key="OverlayGradientBrush" Opacity="1.0" StartPoint="1 0" EndPoint="0 0">
-                        <GradientStop Offset="0.00" Color="#00FFFFFF" />
-                        <GradientStop Offset="0.30" Color="#4DFFFFFF" />
+                        <GradientStop Offset="0.00" Color="#4DFFFFFF" />
                         <GradientStop Offset="0.50" Color="#80FFFFFF" />
                         <GradientStop Offset="1.00" Color="#CCFFFFFF" />
                     </LinearGradientBrush>
@@ -66,10 +64,10 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="models:Category">
-                            <Button Style="{StaticResource AccentButtonStyle}">
+                            <Button CornerRadius="8" Style="{StaticResource AccentButtonStyle}">
                                 <TextBlock
                                     Margin="-4"
-                                    FontSize="12"
+                                    FontSize="11"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind CategoryName}" />
                             </Button>
@@ -101,20 +99,18 @@
             BorderThickness="0"
             CornerRadius="4">
             <Border x:Name="BorderImage" CornerRadius="4">
-                <Border.Background>
-                    <ImageBrush Stretch="UniformToFill">
-                        <ImageBrush.ImageSource>
-                            <BitmapImage
-                                DecodePixelHeight="1080"
-                                DecodePixelWidth="1920"
-                                ImageFailed="BitmapImage_OnImageFailed"
-                                ImageOpened="BitmapImage_OnImageOpened"
-                                UriSource="{x:Bind Podcast.Artwork, Mode=OneWay}" />
-                        </ImageBrush.ImageSource>
-                    </ImageBrush>
-                </Border.Background>
+                <Image Stretch="UniformToFill">
+                    <Image.Source>
+                        <BitmapImage
+                            DecodePixelHeight="1080"
+                            DecodePixelWidth="1920"
+                            ImageFailed="BitmapImage_OnImageFailed"
+                            ImageOpened="BitmapImage_OnImageOpened"
+                            UriSource="{x:Bind Podcast.Artwork, Mode=OneWay}" />
+                    </Image.Source>
+                </Image>
             </Border>
-            <winUi:Shimmer x:Name="Shimmer" IsActive="True" />
+            <winUi:Shimmer x:Name="Shimmer" Canvas.ZIndex="1" />
             <FontIcon
                 x:Name="SubstituteIcon"
                 Margin="20"
@@ -122,10 +118,7 @@
                 FontSize="252"
                 Glyph="&#xE720;"
                 Visibility="Collapsed" />
-            <Border
-                x:Name="ImageOverlay"
-                Background="{ThemeResource OverlayGradientBrush}"
-                Visibility="Visible" />
+            <Border x:Name="ImageOverlay" Background="{ThemeResource OverlayGradientBrush}" />
         </Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
