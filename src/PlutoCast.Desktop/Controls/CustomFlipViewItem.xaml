@@ -95,6 +95,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Margin="0"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource ControlElevationBorderBrush}"
             BorderThickness="0"
             CornerRadius="4">
