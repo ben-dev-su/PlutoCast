@@ -17,25 +17,24 @@
             x:Name="PodcastImage"
             Width="200"
             Height="112"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource ControlElevationBorderBrush}"
             BorderThickness="0"
             CornerRadius="4">
-            <Border.Background>
-                <ImageBrush Stretch="UniformToFill">
-                    <ImageBrush.ImageSource>
+            <Grid>
+                <Image Stretch="UniformToFill">
+                    <Image.Source>
                         <BitmapImage
                             DecodePixelHeight="225"
                             DecodePixelWidth="300"
                             ImageFailed="BitmapImage_OnImageFailed"
                             ImageOpened="BitmapImage_OnImageOpened"
                             UriSource="{x:Bind Podcast.Image}" />
-                    </ImageBrush.ImageSource>
-                </ImageBrush>
-            </Border.Background>
-            <Grid>
+                    </Image.Source>
+                </Image>
                 <FontIcon
                     x:Name="SubstituteIcon"
-                    Margin="12"
+                    Margin="20"
                     VerticalAlignment="Top"
                     FontSize="50"
                     Glyph="&#xE720;"
