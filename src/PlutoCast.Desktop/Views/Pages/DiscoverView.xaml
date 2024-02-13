@@ -117,17 +117,15 @@
                         Height="420"
                         MaxWidth="1920"
                         Background="{ThemeResource LayerFillColorDefaultBrush}"
-                        BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
-                        BorderThickness="1"
                         CornerRadius="4"
                         ItemClickCommand="{x:Bind ViewModel.PodcastClickCommand}"
                         ItemsSource="{x:Bind ViewModel.TopTrendingPodcasts}">
                         <winUi:Effects.Shadow>
                             <media:AttachedCardShadow
-                                BlurRadius="8"
+                                BlurRadius="24"
                                 CornerRadius="4"
                                 Opacity="0.0"
-                                Offset="0,2" />
+                                Offset="0,0" />
                         </winUi:Effects.Shadow>
                         <animations:Explicit.Animations>
                             <animations:AnimationSet x:Name="FlipViewEnteredAnimation">
