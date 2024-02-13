@@ -2,4 +2,5 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="HeaderControlStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
 </ResourceDictionary>
