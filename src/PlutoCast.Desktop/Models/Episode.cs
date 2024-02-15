@@ -1,6 +1,5 @@
 ﻿using System;
 using PlutoCast.Desktop.Enums;
-using PlutoCast.Desktop.Services;
 
 namespace PlutoCast.Desktop.Models;
 
@@ -27,6 +26,7 @@ public class Episode
     public string? FeedLanguage { get; set; }
     public bool FeedDead { get; set; }
     public Uri? TranscriptUrl { get; set; }
+    public string? FeedAuthor { get; set; }
 
     public string EpisodeInfo => GetFriendlyEpisodeInfo();
 
