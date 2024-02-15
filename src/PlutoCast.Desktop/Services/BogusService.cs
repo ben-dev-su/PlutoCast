@@ -485,7 +485,7 @@ public class BogusService
         }
     }
 
-    public IEnumerable<Episode> GetEpisodes(long podcastId)
+    public IEnumerable<Episode> GetEpisodes(TrendingPodcast podcast)
     {
         var episodeCount = Random.Shared.Next(2, 50);
         foreach (
@@ -510,7 +510,8 @@ public class BogusService
                 .RuleFor(p => p.Image, f => new Uri(f.Image.PicsumUrl()))
                 .RuleFor(p => p.FeedItunesId, f => f.Random.Long(1000, 100000))
                 .RuleFor(p => p.FeedImage, f => new Uri(f.Image.PicsumUrl()))
-                .RuleFor(p => p.FeedId, _ => podcastId)
+                .RuleFor(p => p.FeedId, _ => podcast.Id)
+                .RuleFor(p => p.FeedAuthor, _ => podcast.Author)
                 .RuleFor(p => p.FeedLanguage, _ => "en")
                 .RuleFor(p => p.FeedDead, f => f.Random.Bool(0.1f))
                 .RuleFor(

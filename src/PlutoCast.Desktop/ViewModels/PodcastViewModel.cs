@@ -34,7 +34,7 @@ public partial class PodcastViewModel(BogusService bogusService) : BaseViewModel
         if (args.Parameter is not TrendingPodcast podcast)
             return;
 
-        GetEpisodes(podcast.Id);
+        GetEpisodes(podcast);
         PodcastMetaDataText = GetFriendlyPodcastInfo(podcast);
         Podcast = podcast;
     }
@@ -53,9 +53,9 @@ public partial class PodcastViewModel(BogusService bogusService) : BaseViewModel
         var result = await dialog.ShowAsync();
     }
 
-    private void GetEpisodes(long id)
+    private void GetEpisodes(TrendingPodcast podcast)
     {
-        foreach (var episode in bogusService.GetEpisodes(id))
+        foreach (var episode in bogusService.GetEpisodes(podcast))
         {
             Episodes.Add(episode);
         }
